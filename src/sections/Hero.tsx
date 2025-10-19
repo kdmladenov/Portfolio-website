@@ -1,12 +1,5 @@
 import React from "react";
-import {
-  Box,
-  Typography,
-  Avatar,
-  Stack,
-  Link,
-  Chip
-} from "@mui/material";
+import { Box, Typography, Avatar, Stack, Link, Chip } from "@mui/material";
 
 import { HeroOrbit } from "../components/HeroOrbit";
 import grainImage from "../assets/images/grain.jpg";
@@ -76,15 +69,6 @@ const OrbitDot = ({ size }: { size: number }) => (
 // Main Hero Section
 // ------------------
 export const HeroSection: React.FC = () => {
-  const handleScroll = (elementId: string) => {
-    const element = document.getElementById(elementId);
-    if (element) {
-      const yOffset = -100;
-      const y = element.getBoundingClientRect().top + window.scrollY + yOffset;
-      window.scrollTo({ top: y, behavior: "smooth" });
-    }
-  };
-
   const orbitElements = [
     { size: 800, rotation: -72, speed: 60, child: <StarIcon size={112} /> },
     { size: 550, rotation: 20, speed: 42, child: <StarIcon size={48} /> },
