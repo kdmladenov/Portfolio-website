@@ -1,12 +1,18 @@
 import React from "react";
-import { Box, Typography, Button, Avatar } from "@mui/material";
-import { motion } from "framer-motion";
-import { KeyboardArrowDown } from "@mui/icons-material";
+import {
+  Box,
+  Typography,
+  Avatar,
+  Stack,
+  Link,
+  Chip
+} from "@mui/material";
+
 import { HeroOrbit } from "../components/HeroOrbit";
 import grainImage from "../assets/images/grain.jpg";
 import star from "../assets/icons/star.svg?url";
 import sparkle from "../assets/icons/sparkle.svg?url";
-
+import contactsList from "@/constants/contactsList";
 
 // ------------------
 // Reusable Icon Components
@@ -204,63 +210,74 @@ export const HeroSection: React.FC = () => {
           </Typography>
         </Box>
 
-        {/* Buttons */}
-        <Box
-          sx={{
-            mt: 4,
-            display: "flex",
-            justifyContent: "center",
-            flexDirection: { xs: "column", md: "row" },
-            gap: 2,
-            alignItems: "center"
-          }}
+        {/* Contacts */}
+        <Stack
+          direction="row"
+          marginTop={5}
+          spacing={2}
+          alignItems="center"
+          justifyContent="center"
+          flexWrap="wrap"
         >
-          {[
-            {
-              label: "Explore My Work",
-              icon: <KeyboardArrowDown />,
-              variant: "outlined",
-              onClick: () => handleScroll("projects"),
-              sx: {
-                backgroundColor: "background.paper",
-                borderColor: "rgba(255, 255, 255, 0.15)",
-                color: "white",
-                "&:hover": {
-                  backgroundColor: "rgba(255, 255, 255, 0.05)",
-                  borderColor: "rgba(255, 255, 255, 0.25)"
-                }
-              }
-            },
-            {
-              label: "Let's Connect",
-              icon: <span>👋</span>,
-              variant: "contained",
-              onClick: () => handleScroll("contact"),
-              sx: {
-                backgroundColor: "white",
-                color: "gray.900",
-                "&:hover": {
-                  backgroundColor: "rgba(255, 255, 255, 0.9)"
-                }
-              }
-            }
-          ].map((btn, i) => (
-            <motion.div
-              key={i}
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-            >
-              <Button
-                variant={btn.variant as "outlined" | "contained"}
-                startIcon={btn.icon}
-                onClick={btn.onClick}
-                sx={{ height: 48, px: 3, ...btn.sx }}
+          {contactsList.map((contact) =>
+            contact.href ? (
+              <Link
+                key={contact.title}
+                href={contact.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                underline="none"
               >
-                {btn.label}
-              </Button>
-            </motion.div>
-          ))}
-        </Box>
+                <Chip
+                  avatar={
+                    <Avatar
+                      sx={{
+                        bgcolor: "transparent",
+                        color: "primary.main",
+                        width: 24,
+                        height: 24
+                      }}
+                    >
+                      <i className={contact.icon} aria-hidden="true" />
+                    </Avatar>
+                  }
+                  label={contact.title}
+                  variant="outlined"
+                  sx={{
+                    color: "rgba(255, 255, 255, 0.8)",
+                    borderColor: "rgba(255, 255, 255, 0.3)",
+                    "&:hover": {
+                      borderColor: "primary.main",
+                      color: "primary.main"
+                    }
+                  }}
+                />
+              </Link>
+            ) : (
+              <Chip
+                key={contact.title}
+                avatar={
+                  <Avatar
+                    sx={{
+                      bgcolor: "transparent",
+                      color: "primary.main",
+                      width: 24,
+                      height: 24
+                    }}
+                  >
+                    <i className={contact.icon} aria-hidden="true" />
+                  </Avatar>
+                }
+                label={contact.title}
+                variant="outlined"
+                sx={{
+                  color: "rgba(255, 255, 255, 0.8)",
+                  borderColor: "rgba(255, 255, 255, 0.3)"
+                }}
+              />
+            )
+          )}
+        </Stack>
       </Box>
     </Box>
   );
