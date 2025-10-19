@@ -12,12 +12,12 @@
   "categories": ["portfolio", "development", "web"],
   "icons": [
     {
-      "src": "/icon.png",
+      "src": "/icon.ico",
       "sizes": "32x32",
       "type": "image/png"
     },
     {
-      "src": "/apple-icon.png",
+      "src": "/favicon.ico",
       "sizes": "180x180",
       "type": "image/png"
     }
