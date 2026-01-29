@@ -22,6 +22,7 @@ import qualificationsList from "../constants/qualificationsList";
 // ===== Types for the UI layer =====
 type ExperienceItem = {
   company: string;
+  companyLinks?: { text: string; url: string }[];
   role: string;
   period: string;
   location?: string;
@@ -74,6 +75,16 @@ const Eyebrow = styled(Typography)<TypographyProps>(() => ({
   color: "transparent"
 }));
 
+const StyledLink = styled("a")({
+  color: "inherit",
+  textDecoration: "none",
+  pointerEvents: "auto",
+  "&:hover": {
+    textDecoration: "underline",
+    textDecorationColor: "rgba(110,231,183,0.6)"
+  }
+});
+
 const EyebrowSub = styled(Typography)<TypographyProps>(({ theme }) => ({
   fontWeight: 700,
   textTransform: "uppercase",
@@ -116,6 +127,44 @@ const getExperienceDuration = (period: string): string => {
   return [yearsStr, monthsStr].filter(Boolean).join(" ");
 };
 
+const renderCompany = (
+  company: string,
+  links?: { text: string; url: string }[]
+): React.ReactNode => {
+  if (!links || links.length === 0) return company;
+
+  let result: React.ReactNode[] = [company];
+
+  links.forEach((link) => {
+    const newResult: React.ReactNode[] = [];
+    result.forEach((part) => {
+      if (typeof part === "string") {
+        const split = part.split(link.text);
+        split.forEach((subPart, i) => {
+          newResult.push(subPart);
+          if (i < split.length - 1) {
+            newResult.push(
+              <StyledLink
+                key={`${link.text}-${i}`}
+                href={link.url}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {link.text}
+              </StyledLink>
+            );
+          }
+        });
+      } else {
+        newResult.push(part);
+      }
+    });
+    result = newResult;
+  });
+
+  return <>{result}</>;
+};
+
 const toExperienceItems = (): ExperienceItem[] => {
   const list = qualificationsList?.experience ?? [];
   return list.map((e: any) => {
@@ -141,6 +190,7 @@ const toExperienceItems = (): ExperienceItem[] => {
 
     return {
       company,
+      companyLinks: e.institutionLinks,
       role,
       period: e.period ?? "",
       location,
@@ -197,7 +247,9 @@ export const ExperienceSection: React.FC = () => {
                   {exp.period} ({getExperienceDuration(exp.period)})
                 </Typography>
 
-                <Eyebrow component="div">{exp.company}</Eyebrow>
+                <Eyebrow component="div">
+                  {renderCompany(exp.company, exp.companyLinks)}
+                </Eyebrow>
 
                 {exp.location && (
                   <EyebrowSub component="div">{exp.location}</EyebrowSub>
