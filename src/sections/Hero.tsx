@@ -7,6 +7,8 @@ import star from "../assets/icons/star.svg?url";
 import sparkle from "../assets/icons/sparkle.svg?url";
 import contactsList from "@/constants/contactsList";
 
+import profilePicture from "../assets/Profile_Picture.jpeg";
+
 // ------------------
 // Reusable Icon Components
 // ------------------
@@ -159,7 +161,7 @@ export const HeroSection: React.FC = () => {
       >
         <Box display="flex" alignItems="center" flexDirection="column">
           <Avatar
-            src="https://media.licdn.com/dms/image/v2/D4D03AQGR3uSe5YRcnA/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1670961706827?e=1762387200&v=beta&t=SleJ4cMaGgGDKtobBDmleO3XZOR6k7OaX1XObd8ojOc"
+            src={profilePicture}
             sx={{ width: 100, height: 100, mb: 2 }}
           />
         </Box>
